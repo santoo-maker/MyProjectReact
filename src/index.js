@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import {BrowserRouter, Route} from 'react-router-dom';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Dashboard from './Components/Dashboard';
+import OrganzerLogin from './Components/OrganzerLogin';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-    <Route path = '/' exact component = {OrganizerLogin} />
+    <Route path = '/' exact component = {OrganzerLogin} />
+    <Route path = '/dashboard' exact component = {Dashboard} />
     
     </BrowserRouter>
   </React.StrictMode>,
