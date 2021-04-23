@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {BrowserRouter, Route} from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+    <Route path = '/' exact component = {OrganizerLogin} />
+    
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
