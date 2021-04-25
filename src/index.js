@@ -8,6 +8,7 @@ import "react-bootstrap/dist/react-bootstrap.min.js";
 import Dashboard from './Components/Dashboard';
 import OrganzerLogin from './Components/OrganzerLogin';
 import Home from './Components/Home';
+import AddEvents from './Components/AddEvents';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.render(
     <Route path = '/' exact component = {OrganzerLogin} />
     <Route path = '/dashboard' exact component = {Dashboard} />
     <Route path = '/dashboard/home' exact component = {Home} />
+    <Route path = '/dashboard/addEvents' exact component = {AddEvents} />
     
     </BrowserRouter>
   </React.StrictMode>,
