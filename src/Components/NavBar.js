@@ -18,7 +18,7 @@ export default function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/dashboard/home" className = "ml-20x">Home</Nav.Link>
+            <Nav.Link className = "ml-20x">Home</Nav.Link>
             <Nav.Link href="/dashboard/account" className = "ml-40x">Account</Nav.Link>
             <Nav.Link href="/dashboard/addEvents" className = "ml-40x">Add Events</Nav.Link>
             <NavDropdown title="Players Entry" id="basic-nav-dropdown" className = "ml-40x">
@@ -37,6 +37,8 @@ export default function NavBar() {
             <FormControl type="text" placeholder="Search" className="mr-sm-2 ml-40x" />
             <Button variant="outline-success">Search</Button>
           </Form>
+
+          <Navbar.Brand>Hello Organizer !!!</Navbar.Brand>
         </Navbar.Collapse>
       </Navbar>
     )
