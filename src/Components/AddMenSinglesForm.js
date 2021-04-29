@@ -28,7 +28,18 @@ export default function AddMenSinglesForm() {
         .then (response => {
             console.log("response", response)
 
+            if(response.data.message === "successfully added player")
+            {
+                alert(`You have successfully added the player for Men Singles for slot number ${response.data.PlayerSN}`)
+            }
+
+            else
+            {
+                alert(`you have entered the one SN number for two players which is ${response.data.PlayerSN} `)
+            }
+
         })
+     
         singleForm.reset();
     
     }
