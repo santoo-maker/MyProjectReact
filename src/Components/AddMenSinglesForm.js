@@ -1,7 +1,9 @@
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
 import { Form } from 'react-bootstrap'
 import NavBar from './NavBar'
 import axios from 'axios'
+import AddMenSingles from './AddMenSingles'
+
 
 export default function AddMenSinglesForm() {
 
@@ -9,8 +11,11 @@ export default function AddMenSinglesForm() {
     const [PlayerSN, setPlayerSN] = useState("")
     const [PlayerRepresentation, setPlayerRepresentation] = useState("");
     const [singleForm, setSingleForm] = useState({});
+    const [MenSinglesPlayer, setMenSinglesPlayer] = useState([])
+    
+    console.log("jjj",PlayerFullName, PlayerSN, PlayerRepresentation)
 
-    console.log(PlayerFullName, PlayerSN, PlayerRepresentation)
+   
 
     const data = {
 
@@ -19,7 +24,18 @@ export default function AddMenSinglesForm() {
         PlayerRepresentation : PlayerRepresentation
     }
 
+    useEffect(() => {
+        console.log("lol")
+        axios.get('http://localhost/getMenSinglesPlayer')
+        .then((response => {
 
+           console.log("response", response)
+            setMenSinglesPlayer(response.data)
+            console.log("MenSinglesPlayer", MenSinglesPlayer)
+        }))
+ 
+     });
+     
 
     const addPlayer = () => {
 
@@ -37,7 +53,7 @@ export default function AddMenSinglesForm() {
             {
                 alert(`you have entered the one SN number for two players which is ${response.data.PlayerSN} `)
             }
-
+            window.location.reload(false);
         })
      
         singleForm.reset();
@@ -81,6 +97,20 @@ export default function AddMenSinglesForm() {
 
                 <button  className = "btn btn-primary border border-success" onClick = {addPlayer}>Add Player</button>
                 
+            </div>
+
+            <div className =  "container border border-primary mt-10x">
+            <span className = "fs-20 flex flex-center mt-20x mb-20x">Players For Mens Singles</span>  
+
+            {
+                    (MenSinglesPlayer || []).map((playerData, index) => (
+                        <div>
+                        
+                       <AddMenSingles playerData = {playerData} />
+
+                        </div>
+                    ))
+                }
             </div>
         </div>
     )
