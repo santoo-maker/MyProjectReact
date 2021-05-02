@@ -8,6 +8,9 @@ function Dashboard() {
     return (
         <div>
            <NavBar />
+           {
+               console.log("lol")
+           }
            <div className="flex">
            <Home />
            </div>

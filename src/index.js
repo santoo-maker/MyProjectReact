@@ -10,6 +10,7 @@ import OrganzerLogin from './Components/OrganzerLogin';
 import Home from './Components/Home';
 import AddEvents from './Components/AddEvents';
 import AddMenSinglesForm from './Components/AddMenSinglesForm';
+import MenSinglesTieSheet from './Components/MenSinglesTieSheet';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,8 @@ ReactDOM.render(
     <Route path = '/dashboard/home' exact component = {Home} />
     <Route path = '/dashboard/addEvents' exact component = {AddEvents} />
     <Route path = '/dashboard/players_entry/menssingles' exact component = {AddMenSinglesForm} />
+    <Route path = '/dashboard/players_entry/menssingles/tie-sheet' exact component = {MenSinglesTieSheet} />
+    
     
     
     </BrowserRouter>
