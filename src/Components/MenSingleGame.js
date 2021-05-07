@@ -5,98 +5,118 @@ import _ from "lodash";
 
 export default function MenSingleGame() {
   const [MenSinglesPlayer, setMenSinglesPlayer] = useState([]);
-  const [checkedWin, setCheckedWin] = useState(false)
-  const [checkedLoss, setCheckedLoss] = useState(false)
+ 
+  const [LossPlayer, setLossPlayer] = useState({});
+  const [Disabled, setDisabled] = useState([false, false]);
+  const [Refresh, setRefresh] = useState(false)
+  const [Lost, setLost] = useState("")
 
-  // const [ShowVS , setShowVS] = useState("")
-  // var ShowVs = false
+  const data1 = {
+    Status : "Semifinalist"
+}
 
-  // const Index = index  + 1
-
-  // {
-  //     if(Index % 2 !== 0)
-  //     {
-  //        ShowVs = true
-  //     }
-  // }
-
-  console.log("MenSinglesPlayer", MenSinglesPlayer);
 
   useEffect(() => {
+      const index = localStorage.getItem('index')
+      console.log("localIndex",index)
     axios.get("http://localhost:80/getMenSinglesPlayer").then((response) => {
       setMenSinglesPlayer(response.data);
+
+ 
+
     });
   }, []);
 
   const sortedPlayer = _.sortBy(MenSinglesPlayer, ["PlayerSlot"]);
 
-  //   return (
-  //     <div>
-  //       {(sortedPlayer || []).map((player, index) => (
-  //         <div key={index}>{player.PlayerFullName}</div>
-  //       ))}
-  //     </div>
-  //   );
+  console.log("LossPlayer", LossPlayer.PlayerRepresentation);
 
-  console.log("sortedPlayer", sortedPlayer)
 
-  if(checkedWin === true){
-      console.log("checkWin", checkedWin)
+  const addPlayer = (winnerData, index) => () => {
+    console.log(winnerData, index);
+   
+
+    const data = {
+
+        PlayerFullName : winnerData.PlayerFullName,
+        PlayerSN : winnerData.PlayerSN,
+        PlayerRepresentation : winnerData.PlayerRepresentation,
+        PlayerSlot : winnerData.PlayerSlot,
+        Status : "Semifinalist"
+      }
+
+      console.log("data", data)
+
+    axios
+    .post("http://localhost:80/dashboard/players_entry/menssingles/Winner", data)
+    .then((response) => {
+        console.log("responeWinner", response)
+        
+        if(response.data.message === "successfully added winner Player"){
+
+            setRefresh(true)
+            console.log("seetrefresh true bhayo")
+        }
+    });
+    const disabled = [...Disabled];
+
+    if(index % 2 === 0)
+    {
+        disabled[index] = [true];
+        disabled[index +1] = [true]
+        
+    }
+
+    if(index % 2 !== 0){
+        disabled[index] = [true];
+        disabled[index - 1] = [true]
+    }
+
+   
+    setDisabled(disabled);
+    
+  };
+
+  const lossPlayer = (looserData, index) => () => {
+    const disabled = [...Disabled];
+
+    disabled[index] = true;
+
+    setDisabled(disabled);
   }
 
+  console.log("Disabled", Disabled);
+
   return (
-    <div className="border border-success mt-10x">
-      {sortedPlayer.map((data, index) => (
+    <div className="border border-primary mt-10x mb-10x">
+      {sortedPlayer.map((playerData, index) => (
         <div key={index}>
           <div>
-            {index % 2 === 0 && (
-              <Table striped bordered hover size="sm">
-                <tbody width="100px">
-                  <tr>
-                    <td>{MenSinglesPlayer[index].PlayerSN}</td>
+            <Table striped bordered hover variant = "" size="sm">
+              <tbody width="100px">
+                <tr>
+                  <td>{sortedPlayer[index].PlayerSlot}</td>
 
-                    <td>
-                      {sortedPlayer[index].PlayerFullName} (
-                      {sortedPlayer[index].PlayerRepresentation})
-                    </td>
-                    <td>
-                        <input type = "checkbox" onChange = {e => {return setCheckedWin(e.target.checked)}} /> Win
-                    </td>
-                    <td>
-                        <input type = "checkbox" /> Loss
-                    </td>
-                    
-                  </tr>
-                </tbody>
-              </Table>
-            )}
-          </div>
+                  <td width = "310px">
+                    {sortedPlayer[index].PlayerFullName} (
+                    {sortedPlayer[index].PlayerRepresentation})
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-success"
+                      disabled={Disabled[index]}
+                      onClick={addPlayer(playerData, index)}
+                    >
+                      Win
+                    </button>
+                  </td>
+            
+               
+                </tr>
+              </tbody>
+            </Table>
 
-          <div>
             {index % 2 == 0 && <span className="flex flex-center">VS</span>}
-          </div>
-
-          <div>
-            {index % 2 !== 0 && (
-              <Table striped bordered hover size="sm">
-                <tbody width="100px">
-                  <tr>
-                    <td>{MenSinglesPlayer[index].PlayerSN}</td>
-
-                    <td>
-                      {sortedPlayer[index].PlayerFullName} (
-                      {sortedPlayer[index].PlayerRepresentation})
-                    </td>
-                    <td>
-                        <input type = "checkbox" /> Win
-                    </td>
-                    <td>
-                        <input type = "checkbox" /> Loss
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            )}
           </div>
         </div>
       ))}

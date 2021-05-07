@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 
 
 import MenSingleGame from "./MenSingleGame";
+import MenSingleGameSemiFinal from "./MenSingleGameSemiFinal";
 
 
 export default function MenSinglesTieSheet() {
@@ -22,7 +23,7 @@ export default function MenSinglesTieSheet() {
     <div>
       <NavBar />
 
-      <div className="container addEvents border border-success"></div>
+      
       <div className="containers float-left" width="100px">
         {/* {
                     (MenSinglesPlayer || []).map((data, index) => (
@@ -37,9 +38,13 @@ export default function MenSinglesTieSheet() {
                 } */}
       </div>
 
-      <div className="container border border-success">
+      <div className="container-fluid border border-success">
         <div className="containers float-left flex" width="100px">
           <MenSingleGame />
+            <div className = "pl-10x">
+            <MenSingleGameSemiFinal />
+            </div>
+          
 
         </div>
       </div>
